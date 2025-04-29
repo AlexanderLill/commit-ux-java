@@ -6,6 +6,19 @@ public class Main {
         for (int i = 0; i < transports.length; i++){
             jobs[i] = new Entities.TransportJob(transports[i]);
         }
+
+        StringBuilder transportInfo = new StringBuilder();
+        for (Entities.TransportJob job : jobs) {
+                transportInfo.append(String.format("Transport ID: %s Delivery ID: %s %n",
+                    job.Transport.TransportId.toString().split("-")[0],
+                    job.CurrentDeliveryId
+                ));
+            for (Entities.DeliveryOrder order : job.Transport.Orders.values()) {
+                transportInfo.append(transportInfo.append(order.toString()));
+            }
+        }
+        System.out.println(transportInfo);
+
         for (Entities.TransportJob job: jobs) {
             job.start();
         }

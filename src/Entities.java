@@ -58,6 +58,17 @@ public class Entities {
             AccountManager = manager;
             DeliveryAddress = address;
         }
+
+        public String toString() {
+            String itemString = "";
+            for (Entities.DeliveryContainer container: Containers.values()) {
+                for (Map.Entry<UUID, OrderItem> item: container.Orders.entrySet()) {
+                    itemString += String.format("- %s: %sx %s %n", item.getValue().Description, container.Orders.size(), item.getValue().Value);
+                }
+            }
+            String result = String.format("Address: %s Items:%n%s %n", DeliveryAddress, itemString);
+            return result;
+        }
     }
 
     static class Transport {
@@ -116,6 +127,7 @@ public class Entities {
                     }
                 }
                 isActive = false;
+                System.out.printf("Transport %s has arrived.%n", Transport.TransportId, Transport.CurrentDestination);
             }
             else {
                 System.out.printf("Transport %s is empty.%n", Transport.TransportId);
